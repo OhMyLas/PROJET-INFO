@@ -214,7 +214,7 @@ void menu_entreprise (){
 		//si non recommencer
 }
 
-void menu_admin(void)
+void menu_admin(void)  //en cour
 {
  	char nom [20];
 	char mdp_saisi[20];
@@ -224,12 +224,14 @@ void menu_admin(void)
 	printf ("  +                                    +\n");
 	printf ("  + Entrer votre nom :                 +\n");
 	fgets (nom, 20, stdin);
+	getchar ();
 	printf ("  + Entrer votre mot de passe :        +\n");
     fgets (mdp_saisi, 20, stdin);
+    getchar ();
 	printf ("  +------------------------------------+\n");
 	if (strcmp(nom, "admin") == 0 && strcmp(mdp_saisi, "password") == 0)
 		ajouter_au_fic();
-	else 
+	else
 	{
 		printf("Combinaison incorrecte ! ");
 		menu_admin();
