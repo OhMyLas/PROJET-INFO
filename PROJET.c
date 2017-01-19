@@ -234,7 +234,7 @@ printf ("%s", nom); // pour test
 printf ("%s", mdp_saisi); //pour test
 
 	printf ("  +------------------------------------+\n");
-	if (strcmp(nom, "admin") == 0 && strcmp(mdp_saisi, "password") == 0)
+	if (strncmp(nom, "admin", 5) == 0 && strncmp(mdp_saisi, "password", 8) == 0)
 		ajouter_au_fic();
 	else
 	{
