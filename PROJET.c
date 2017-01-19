@@ -223,11 +223,16 @@ void menu_admin(void)  //en cour
 	printf ("  + Vous avez choisi Administrateur :      +\n");
 	printf ("  +                                    +\n");
 	printf ("  + Entrer votre nom :                 +\n");
-	fgets (nom, 20, stdin);
 	getchar ();
+	fgets (nom, 20, stdin);
+
+printf ("%s", nom); // pour test
+
 	printf ("  + Entrer votre mot de passe :        +\n");
-    fgets (mdp_saisi, 20, stdin);
     getchar ();
+    fgets (mdp_saisi, 20, stdin);
+printf ("%s", mdp_saisi); //pour test
+
 	printf ("  +------------------------------------+\n");
 	if (strcmp(nom, "admin") == 0 && strcmp(mdp_saisi, "password") == 0)
 		ajouter_au_fic();
