@@ -229,7 +229,6 @@ void menu_admin(void)  //en cour
 printf ("%s", nom); // pour test
 
 	printf ("  + Entrer votre mot de passe :        +\n");
-    getchar ();
     fgets (mdp_saisi, 20, stdin);
 printf ("%s", mdp_saisi); //pour test
 
