@@ -41,58 +41,65 @@ struct Entreprise {
 
 
 //fonctions essentiels
-	//fonctions saisi UN apprenti/enseignant/entreprise
+	// 1)   fonctions saisi UN apprenti/enseignant/entreprise (marche correctement)
 	struct Apprenti saisir_apprenti (){
 		struct Apprenti apprenti;
 
-		printf ("\n Entrer le prenom de l'apprenti : ");
+		printf ("Entrer le prenom de l'apprenti : ");
+		getchar();
 		fgets (apprenti.prenom, 20, stdin);
 		printf ("\n Entrer le nom de l'apprenti : ");
 		fgets (apprenti.nom, 20, stdin);
 		printf ("\n Entrer le salaire de l'apprenti : ");
 		scanf ("%f", &apprenti.salaire );
 		printf ("\n Entrer le mot de passe de l'apprenti : ");
+		getchar();
 		fgets (apprenti.mdp_apprenti, 20, stdin);
 		return apprenti;
 	}
 	struct Enseignant saisir_enseignant (){
 		struct Enseignant enseignant;
 
-		printf ("\n Entrer le prenom de l'enseignant : ");
+		printf ("Entrer le prenom de l'enseignant : ");
+		getchar();
 		fgets (enseignant.prenom, 20, stdin);
 		printf ("\n Entrer le nom de l'enseignant : ");
 		fgets (enseignant.nom, 20, stdin);
 		printf ("\n Entrer le bureau de l'enseignant : ");
 		fgets (enseignant.bureau, 20, stdin);
 		printf ("\n Entrer le mot de passe de l'enseignant : ");
+		getchar();
 		fgets (enseignant.mdp_enseignant, 20, stdin);
 		return enseignant;
 	}
 	struct Entreprise saisir_entreprise (){
 		struct Entreprise entreprise;
 
-		printf ("\n Entrer le nom de l'entreprise :");
+		printf ("Entrer le nom de l'entreprise :");
+		getchar();
 		fgets (entreprise.nom, 20, stdin);
 		printf ("\n vous allez maintenant entrer l'adresse \n");
 		printf ("Entrer le numero de rue de l'entreprise : ");
 		scanf("%d", &entreprise.adresse_entreprise.num_rue);
 		printf ("\n Entrer le nom de rue de l'entreprise : ");
+		getchar();
 		fgets (entreprise.adresse_entreprise.nom_rue, 80, stdin);
 		printf ("\n Entrer le code postal de l'entreprise : ");
 		scanf ("%d", &entreprise.adresse_entreprise.code_postal);
 		printf ("\n Entrer le nom de la ville de l'entreprise : ");
+		getchar();
 		fgets (entreprise.adresse_entreprise.ville, 20, stdin);
 		printf ("\n Entrer le pays de l'entreprise : ");
 		fgets (entreprise.adresse_entreprise.pays, 20, stdin);
 		printf ("\n Entrer le mot de passe de l'entreprise : ");
+		getchar();
 		fgets (entreprise.mdp_entreprise, 20, stdin);
 		return entreprise;
 	}
 
 
 
-
-	//fonction afficher UN apprenti/enseignant/entreprise
+	// 2)   fonction afficher UN apprenti/enseignant/entreprise (a tester)
 	void afficher_apprenti (struct Apprenti apprenti){
 		printf ("\n * %s ", apprenti.prenom);
 		printf ("\n * %s ", apprenti.nom);
@@ -116,19 +123,20 @@ struct Entreprise {
 	}
 
 
-	//fonction pour ajouter un element a un dossier donc demander lequel des trois fichier (apprentie,enseignant,entreprise) puis faire apelle a une fonction saisi
-	void ajouter_au_fic (){
+	// 3)   fonction pour ajouter un element a un dossier donc demander lequel des trois fichier (apprentie,enseignant,entreprise) puis faire apelle a une fonction saisi
+	void ajouter_au_fic (){ // (marche correctement normalement)
 		int choix;
 		struct Apprenti apprenti;
 		struct Enseignant enseignant;
 		struct Entreprise entreprise;
 
 		do {
-			printf ("Vous avez decider d'ajouter un element a un fichier.\n");
+          //  printf ("");
+			printf ("\n\nVous avez decider d'ajouter un element a un fichier.\n");
 			printf ("Choisissez ce que vous vouler ajouter : \n");
 			printf ("\n 1. Un apprenti\n");
 			printf ("\n 2. Un enseignant\n");
-			printf ("\n 3. Un entreprise\n");
+			printf ("\n 3. Un entreprise\n\n\n");
 			scanf("%d", &choix);
 
 			switch (choix)
@@ -138,6 +146,8 @@ struct Entreprise {
 					FILE *fichier_apprenti = fopen("apprenti_fic.dat", "a");
 					fwrite(&apprenti, sizeof(struct Apprenti), 1, fichier_apprenti);
 					fclose(fichier_apprenti);
+					printf("\n\nL'apprentie a bien ete enregistre, vous aller retourner au menu principal.\n\n");
+					menu_principal();
 					break;
 
 				case 2 :
@@ -145,6 +155,8 @@ struct Entreprise {
 					FILE *fichier_enseignant = fopen("enseignant_fic.dat", "a");
 					fwrite(&enseignant, sizeof(struct Enseignant), 1, fichier_enseignant);
 					fclose(fichier_enseignant);
+                    printf("\n\nL'enseignant a bien ete enregistre, vous aller retourner au menu principal.\n\n");
+					menu_principal();
 					break;
 
 				case 3 :
@@ -152,6 +164,8 @@ struct Entreprise {
 					FILE *fichier_entreprise = fopen("entreprise_fic.dat", "a");
 					fwrite(&entreprise, sizeof(struct Entreprise), 1, fichier_entreprise);
 					fclose(fichier_entreprise);
+					printf("\n\nL'entreprise a bien ete enregistre, vous aller retourner au menu principal.\n\n");
+					menu_principal();
 					break;
 				}
 		}while (choix > 3);
@@ -159,129 +173,260 @@ struct Entreprise {
 
 
 
+//Fonction menu
+
+    // 0) menu principale celui qui est executer dans le main
+    void menu_principal (){
+        int choix;
+    do{
+        printf ("  +-------------------------+\n");
+        printf ("  + Qui ete vous ?          +\n");
+        printf ("  +                         +\n");
+        printf ("  + 1. Un apprenti          +\n");
+        printf ("  + 2. Un enseignant        +\n");
+        printf ("  + 3. Une entreprise       +\n");
+        printf ("  + 4. Un Administrateur    +\n");
+        printf ("  +                         +\n");
+        printf ("  + 5. Quitter le programme +\n");
+        printf ("  +-------------------------+\n");
+        printf ("\n\n");
+        scanf ("%d", &choix);
+        switch  (choix)
+            {
+            case 1 :
+                menu_apprenti_1 ();
+                break;
+
+            case 2 :
+                menu_enseignant_1 ();
+                break;
+
+            case 3 :
+                menu_entreprise_1 ();
+                break;
+
+            case 4:
+                menu_admin_1 ();
+                break;
+            case 5 :
+                printf ("\nAu revoir, a bientot.\n\n");
+                break;
+            }
+    }while (choix > 5);
+
+    }
+
+    // 1)   fonctions pour le menu apres 1er choix
+    void menu_apprenti_1 (){  // a finir
+        char nom [20];
+        char mdp_saisi[20];
+
+        printf ("  +------------------------------------+\n");
+        printf ("  + Vous avez choisi apprenti :        +\n");
+        printf ("  +                                    +\n");
+        printf ("  + Entrer votre nom :                 +\n");
+        printf ("  + ");
+        getchar();
+        fgets (nom, 20, stdin);
+        printf ("  + Entrer votre mot de passe :        +\n");
+        printf ("  + ");
+        fgets (mdp_saisi, 20, stdin);
+        printf ("  +------------------------------------+\n");
+
+        //partie a finir
+        /*
+        if (strncmp(nom, ) == 0 && strncmp(mdp_saisi, ) == 0)
+
+        else
+        {
+            printf("Combinaison incorrecte ! \n\n");
+            menu_apprenti_1();
+        }*/
+    }
+    void menu_enseignant_1 (){ // a finir
+        char nom [20];
+        char mdp_saisi[20];
+
+        printf ("  +------------------------------------+\n");
+        printf ("  + Vous avez choisi enseignant :      +\n");
+        printf ("  +                                    +\n");
+        printf ("  + Entrer votre nom :                 +\n");
+        printf ("  + ");
+        getchar();
+        fgets (nom, 20, stdin);
+        printf ("  + Entrer votre mot de passe :        +\n");
+        printf ("  + ");
+        fgets (mdp_saisi, 20, stdin);
+        printf ("  +------------------------------------+\n");
+            //parcourir tout le fichier enseigant et verifier si le nom saisi existe et que le mdp saisi est bien attribué a ce nom
+            //si oui passer au menu suivant
+            //si non recommencer
 
 
+        //partie a finir
+        /*
+        if (strncmp(nom, ) == 0 && strncmp(mdp_saisi, ) == 0) // comparais le nom saisie au nom present dans le fichier et regarder si le mdp correspond
+
+        else
+        {
+            printf("Combinaison incorrecte ! \n\n");
+            menu_enseignant_1 ();
+        }*/
+    }
+    void menu_entreprise_1 (){  //a finir
+        char nom [20];
+        char mdp_saisi[20];
+
+        printf ("  +------------------------------------+\n");
+        printf ("  + Vous avez choisi entreprise :      +\n");
+        printf ("  +                                    +\n");
+        printf ("  + Entrer votre nom :                 +\n");
+        printf ("  + ");
+        getchar();
+        fgets (nom, 20, stdin);
+        printf ("  + Entrer votre mot de passe :        +\n");
+        printf ("  + ");
+        fgets (mdp_saisi, 20, stdin);
+        printf ("  +------------------------------------+\n");
 
 
-//fonctions pour le menu apres 1er choix
-void menu_apprenti (){
-	char nom [20];
-	char mdp_saisi[20];
+        //partie a finir
+        /*
+        if (strncmp(nom, ) == 0 && strncmp(mdp_saisi, ) == 0) // comparais le nom saisie au nom present dans le fichier et regarder si le mdp correspond
 
-    printf ("  +------------------------------------+\n");
-    printf ("  + Vous avez choisi apprenti :        +\n");
-	printf ("  +                                    +\n");
-	printf ("  + Entrer votre nom :                 +\n");
-	fgets (nom, 20, stdin);
-	printf ("  + Entrer votre mot de passe :        +\n");
-	fgets (mdp_saisi, 20, stdin);
-    printf ("  +------------------------------------+\n");
+        else
+        {
+            printf("Combinaison incorrecte ! \n\n");
+            menu_entreprise_1 ();
+        }*/
+    }
+    void menu_admin_1 (){  //marche correctement
+        char nom [20];
+        char mdp_saisi[20];
 
-		//parcourir tout le fichier apprenti et verifier si le nom saisi existe et que le mdp saisi est bien attribué a ce nom
-		//si oui passer au menu suivant
-		//si non recommencer
-}
-void menu_enseignant (){
-  	char nom [20];
-	char mdp_saisi[20];
+        printf ("  +------------------------------------+\n");
+        printf ("  + Vous avez choisi Administrateur :  +\n");
+        printf ("  +                                    +\n");
+        printf ("  + Entrer votre nom :                 +\n");
+        printf ("  + ");
+        getchar ();
+        fgets (nom, 20, stdin);
+        printf ("  + Entrer votre mot de passe :        +\n");
+        printf ("  + ");
+        fgets (mdp_saisi, 20, stdin);
+        printf ("  +------------------------------------+\n");
 
-	printf ("  +------------------------------------+\n");
-	printf ("  + Vous avez choisi enseignant :      +\n");
-	printf ("  +                                    +\n");
-	printf ("  + Entrer votre nom :                 +\n");
-	fgets (nom, 20, stdin);
-	printf ("  + Entrer votre mot de passe :        +\n");
-    fgets (mdp_saisi, 20, stdin);
-	printf ("  +------------------------------------+\n");
-		//parcourir tout le fichier enseigant et verifier si le nom saisi existe et que le mdp saisi est bien attribué a ce nom
-		//si oui passer au menu suivant
-		//si non recommencer
-	}
-void menu_entreprise (){
- 	char nom [20];
-	char mdp_saisi[20];
+        if (strncmp(nom, "admin", 5) == 0 && strncmp(mdp_saisi, "password", 8) == 0)
+            ajouter_au_fic();
+        else
+        {
+            printf("Combinaison incorrecte ! \n\n");
+            menu_admin_1 ();
+        }
+    }
 
-	printf ("  +------------------------------------+\n");
-	printf ("  + Vous avez choisi entreprise :      +\n");
-	printf ("  +                                    +\n");
-	printf ("  + Entrer votre nom :                 +\n");
-	fgets (nom, 20, stdin);
-	printf ("  + Entrer votre mot de passe :        +\n");
-    fgets (mdp_saisi, 20, stdin);
-	printf ("  +------------------------------------+\n");
-		//parcourir tout le fichier enseigant et verifier si le nom saisi existe et que le mdp saisi est bien attribué a ce nom
-		//si oui passer au menu suivant
-		//si non recommencer
-}
 
-void menu_admin(void)  //en cour
-{
- 	char nom [20];
-	char mdp_saisi[20];
+    // 2)   fonction pour le menu apres verification des noms et mdp
+    void menu_apprentie_2 (){ // a finir
+    int choix;
 
-	printf ("  +------------------------------------+\n");
-	printf ("  + Vous avez choisi Administrateur :      +\n");
-	printf ("  +                                    +\n");
-	printf ("  + Entrer votre nom :                 +\n");
-	getchar ();
-	fgets (nom, 20, stdin);
+    printf("\n\nVous avez bien ete connecte en tant qu'apprentie\n");
+    printf("Vous pouvez maintenant acceder a : \n\n");
 
-printf ("%s", nom); // pour test
+    printf("\n1. Afficher votre profil      ");
+    printf("\n2.                            ");
+    printf("\n3.                            ");
+    printf("\n4. retourner au menu principal  ");
 
-	printf ("  + Entrer votre mot de passe :        +\n");
-    fgets (mdp_saisi, 20, stdin);
-printf ("%s", mdp_saisi); //pour test
+    scanf ("%d", &choix);
+        switch  (choix)
+            {
+            case 1 :
 
-	printf ("  +------------------------------------+\n");
-	if (strncmp(nom, "admin", 5) == 0 && strncmp(mdp_saisi, "password", 8) == 0)
-		ajouter_au_fic();
-	else
-	{
-		printf("Combinaison incorrecte ! ");
-		menu_admin();
-	}
-}
+                break;
+
+            case 2 :
+
+                break;
+
+            case 3 :
+
+                break;
+
+            case 4:
+                menu_principal();
+                break;
+            }
+    }
+    void menu_enseignant_2 (){ // a finir
+    int choix;
+
+    printf("\n\nVous avez bien ete connecte en tant qu'apprentie\n");
+    printf("Vous pouvez maintenant acceder a : \n\n");
+
+    printf("\n1. Afficher votre profil      ");
+    printf("\n2.                            ");
+    printf("\n3.                            ");
+    printf("\n4. retourner au menu principal  ");
+
+    scanf ("%d", &choix);
+        switch  (choix)
+            {
+            case 1 :
+
+                break;
+
+            case 2 :
+
+                break;
+
+            case 3 :
+
+                break;
+
+            case 4:
+                menu_principal();
+                break;
+            }
+    }
+    void menu_entreprise_2 (){ // a finir
+    int choix;
+
+    printf("\n\nVous avez bien ete connecte en tant qu'apprentie\n");
+    printf("Vous pouvez maintenant acceder a : \n\n");
+
+    printf("\n1. Afficher votre profil      ");
+    printf("\n2.                            ");
+    printf("\n3.                            ");
+    printf("\n4. retourner au menu principal  ");
+
+    scanf ("%d", &choix);
+        switch  (choix)
+            {
+            case 1 :
+
+                break;
+
+            case 2 :
+
+                break;
+
+            case 3 :
+
+                break;
+
+            case 4:
+                menu_principal();
+                break;
+            }
+    }
+
+
 
 //main
 void main(){
-	int choix;
-do{
     printf ("  +-------------------------------------------------------+\n");
 	printf ("  + Bonjour ce programme sert a la gestion des apprentis  +\n");
     printf ("  +-------------------------------------------------------+\n\n\n");
-
-	printf ("  +-------------------------+\n");
-	printf ("  + Qui ete vous ?          +\n");
-    printf ("  +                         +\n");
-	printf ("  + 1. Un apprenti          +\n");
-	printf ("  + 2. Un enseignant        +\n");
-	printf ("  + 3. Une entreprise       +\n");
-	printf ("  + 4. Un Administrateur    +\n");
-	printf ("  +                         +\n");
-	printf ("  + 5. Quitter le programme +\n");
-	printf ("  +-------------------------+\n");
-    printf ("\n\n");
-	scanf ("%d", &choix);
-	switch  (choix)
-		{
-		case 1 :
-			menu_apprenti();
-			break;
-
-		case 2 :
-			menu_enseignant();
-			break;
-
-		case 3 :
-			menu_entreprise();
-			break;
-
-		case 4:
-			menu_admin();
-			break;
-		case 5 :
-			printf ("\nAu revoir, a bientot.\n\n");
-			break;
-		}
-}while (choix > 4);
+    menu_principal();
 }
