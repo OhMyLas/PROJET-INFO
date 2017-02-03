@@ -44,18 +44,18 @@ struct Entreprise {
 
 //fonctions essentiels
 	// 1)   fonctions saisi UN apprenti/enseignant/entreprise (marche correctement, pb de getchar parfois)
-	struct Apprenti saisir_apprenti (){
+	struct Apprenti saisir_apprenti (){ //remplacement des getchar par des fflush(stdin);
 		struct Apprenti apprenti;
 
 		printf (" Entrer le prenom de l'apprenti : ");
-		getchar();
+        fflush(stdin);
 		fgets (apprenti.prenom, 20, stdin);
 		printf ("\n Entrer le nom de l'apprenti : ");
 		fgets (apprenti.nom, 20, stdin);
 		printf ("\n Entrer le salaire de l'apprenti : ");
 		scanf ("%d", &apprenti.salaire );
 		printf ("\n Entrer le mot de passe de l'apprenti : ");
-		getchar();
+		fflush(stdin);
 		fgets (apprenti.mdp_apprenti, 20, stdin);
 		return apprenti;
 	}
@@ -63,14 +63,14 @@ struct Entreprise {
 		struct Enseignant enseignant;
 
 		printf (" Entrer le prenom de l'enseignant : ");
-		getchar();
+		fflush(stdin);
 		fgets (enseignant.prenom, 20, stdin);
 		printf ("\n Entrer le nom de l'enseignant : ");
 		fgets (enseignant.nom, 20, stdin);
 		printf ("\n Entrer le bureau de l'enseignant : ");
 		fgets (enseignant.bureau, 20, stdin);
 		printf ("\n Entrer le mot de passe de l'enseignant : ");
-		getchar();
+		fflush(stdin);
 		fgets (enseignant.mdp_enseignant, 20, stdin);
 		return enseignant;
 	}
@@ -78,30 +78,30 @@ struct Entreprise {
 		struct Entreprise entreprise;
 
 		printf (" Entrer le nom de l'entreprise :");
-		getchar();
+		fflush(stdin);
 		fgets (entreprise.nom, 20, stdin);
 		printf ("\n vous allez maintenant entrer l'adresse \n");
 		printf (" Entrer le numero de rue de l'entreprise : ");
 		scanf("%d", &entreprise.adresse_entreprise.num_rue);
 		printf ("\n Entrer le nom de rue de l'entreprise : ");
-		getchar();
+		fflush(stdin);
 		fgets (entreprise.adresse_entreprise.nom_rue, 80, stdin);
 		printf ("\n Entrer le code postal de l'entreprise : ");
 		scanf ("%d", &entreprise.adresse_entreprise.code_postal);
 		printf ("\n Entrer le nom de la ville de l'entreprise : ");
-		getchar();
+		fflush(stdin);
 		fgets (entreprise.adresse_entreprise.ville, 20, stdin);
 		printf ("\n Entrer le pays de l'entreprise : ");
 		fgets (entreprise.adresse_entreprise.pays, 20, stdin);
 		printf ("\n Entrer le mot de passe de l'entreprise : ");
-		getchar();
+		fflush(stdin);
 		fgets (entreprise.mdp_entreprise, 20, stdin);
 		return entreprise;
 	}
 
 
 
-	// 2)   fonction afficher UN apprenti/enseignant/entreprise (marche pas)
+	// 2)   fonction afficher UN apprenti/enseignant/entreprise (marche correctement)
 	void afficher_apprenti (struct Apprenti apprenti){
 		printf ("\n +----------------------------------------------------+");
 		printf ("\n + %s ", apprenti.prenom);
@@ -188,8 +188,7 @@ struct Entreprise {
 
 
     // 4)   Fonction pour afficher tout element d'un fichier a determiner (par exemple tout afficher les apprentis du fichier)
-        // a)   Afficher tout les apprentis
-        void afficher_tout_apprenti_fic (){ // (marche corretement)
+        void afficher_tout_apprenti_fic (){
             struct Apprenti apprenti;
             int i = 0;
 
@@ -211,9 +210,7 @@ struct Entreprise {
             printf("\n\n Vous aller retourner au menu principal.\n\n");
             menu_principal();
         }
-
-        // b)   Afficher tout les enseignants
-        void afficher_tout_enseignant_fic (){ // (marche correctement)
+        void afficher_tout_enseignant_fic (){
             struct Enseignant enseignant;
             int i = 0;
 
@@ -235,10 +232,7 @@ struct Entreprise {
             printf("\n\n Vous aller retourner au menu principal.\n\n");
             menu_principal();
         }
-
-
-        //c)    Afficher toute les entreprises
-        void afficher_tout_entreprise_fic (){ // (marche correctement)
+        void afficher_tout_entreprise_fic (){
             struct Entreprise entreprise;
             int i = 0;
 
@@ -261,8 +255,6 @@ struct Entreprise {
             printf("\n\n Vous aller retourner au menu principal.\n\n");
             menu_principal();
         }
-
-
 
 
 
@@ -310,7 +302,7 @@ struct Entreprise {
     }
 
     // 1)   Fonctions pour le menu apres 1er choix
-    void menu_apprenti_1 (){  // a finir
+    void menu_apprenti_1 (){  // a finir (modification des getchar par fflush(stdin);)
         char nom [20];
         char mdp_saisi[20];
 
@@ -320,7 +312,7 @@ struct Entreprise {
         printf ("  +                                    +\n");
         printf ("  + Entrer votre nom :                 +\n");
         printf ("  + ");
-        getchar();
+        fflush(stdin);
         fgets (nom, 20, stdin);
         printf ("  + Entrer votre mot de passe :        +\n");
         printf ("  + ");
@@ -350,7 +342,7 @@ struct Entreprise {
         printf ("  +                                    +\n");
         printf ("  + Entrer votre nom :                 +\n");
         printf ("  + ");
-        getchar();
+        fflush(stdin);
         fgets (nom, 20, stdin);
         printf ("  + Entrer votre mot de passe :        +\n");
         printf ("  + ");
@@ -377,7 +369,7 @@ struct Entreprise {
         printf ("  +                                    +\n");
         printf ("  + Entrer votre nom :                 +\n");
         printf ("  + ");
-        getchar();
+        fflush(stdin);
         fgets (nom, 20, stdin);
         printf ("  + Entrer votre mot de passe :        +\n");
         printf ("  + ");
@@ -404,7 +396,7 @@ struct Entreprise {
         printf ("  +                                    +\n");
         printf ("  + Entrer votre nom :                 +\n");
         printf ("  + ");
-        getchar ();
+        fflush(stdin);
         fgets (nom, 20, stdin);
         printf ("  + Entrer votre mot de passe :        +\n");
         printf ("  + ");
