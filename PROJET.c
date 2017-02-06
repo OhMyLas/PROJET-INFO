@@ -104,27 +104,27 @@ struct Entreprise {
 	// 2)   fonction afficher UN apprenti/enseignant/entreprise (marche correctement)
 	void afficher_apprenti (struct Apprenti apprenti){
 		printf ("\n +----------------------------------------------------+");
-		printf ("\n + %s ", apprenti.prenom);
-		printf ("\n + %s ", apprenti.nom);
-		printf ("\n + Salaire : %d euro", apprenti.salaire);
-		printf ("\n + MDP : %s ", apprenti.mdp_apprenti);
+		printf ("\n | %s ", apprenti.prenom);
+		printf ("\n | %s ", apprenti.nom);
+		printf ("\n | Salaire : %d euro", apprenti.salaire);
+		printf ("\n | MDP : %s ", apprenti.mdp_apprenti);
 		printf ("\n +----------------------------------------------------+\n");
 	}
 	void afficher_enseignant (struct Enseignant enseignant){
 		printf ("\n +----------------------------------------------------+");
-		printf ("\n + %s ", enseignant.prenom);
-		printf ("\n + %s ", enseignant.nom);
-		printf ("\n + Bureau : %s ", enseignant.bureau);
-		printf ("\n + MDP : %s ", enseignant.mdp_enseignant);
+		printf ("\n | %s ", enseignant.prenom);
+		printf ("\n | %s ", enseignant.nom);
+		printf ("\n | Bureau : %s ", enseignant.bureau);
+		printf ("\n | MDP : %s ", enseignant.mdp_enseignant);
 		printf ("\n +----------------------------------------------------+");
 	}
 	void afficher_entreprise (struct Entreprise entreprise){
 		printf ("\n +----------------------------------------------------+");
-		printf ("\n + %s ", entreprise.nom);
-		printf ("\n + %d, %s ", entreprise.adresse_entreprise.num_rue,entreprise.adresse_entreprise.nom_rue );
-		printf ("\n + %d, %s  ", entreprise.adresse_entreprise.code_postal, entreprise.adresse_entreprise.ville, entreprise.adresse_entreprise.pays );
-		printf ("\n + %s ", entreprise.adresse_entreprise.pays);
-		printf ("\n + MDP : %s ", entreprise.mdp_entreprise);
+		printf ("\n | %s ", entreprise.nom);
+		printf ("\n | %d, %s ", entreprise.adresse_entreprise.num_rue,entreprise.adresse_entreprise.nom_rue );
+		printf ("\n | %d, %s  ", entreprise.adresse_entreprise.code_postal, entreprise.adresse_entreprise.ville, entreprise.adresse_entreprise.pays );
+		printf ("\n | %s ", entreprise.adresse_entreprise.pays);
+		printf ("\n | MDP : %s ", entreprise.mdp_entreprise);
 		printf ("\n +----------------------------------------------------+");
 	}
 
@@ -138,15 +138,15 @@ struct Entreprise {
 
 		do {
             printf ("\n  +-----------------------------------------------------------+");
-			printf ("\n  + Vous avez decider d'ajouter un element a un fichier.      +");
-			printf ("\n  + Choisissez ce que vous vouler ajouter :                   +");
+			printf ("\n  | Vous avez decider d'ajouter un element a un fichier.      |");
+			printf ("\n  | Choisissez ce que vous vouler ajouter :                   |");
 			printf ("\n  +-----------------------------------------------------------+");
-			printf ("\n  +                                                           +");
-			printf ("\n  + 1. Un apprenti                                            +");
-			printf ("\n  + 2. Un enseignant                                          +");
-			printf ("\n  + 3. Une entreprise                                         +");
-			printf ("\n  +                                                           +");
-			printf ("\n  + 4. Revenir au menu principal                              +");
+			printf ("\n  |                                                           |");
+			printf ("\n  | 1. Un apprenti                                            |");
+			printf ("\n  | 2. Un enseignant                                          |");
+			printf ("\n  | 3. Une entreprise                                         |");
+			printf ("\n  |                                                           |");
+			printf ("\n  | 4. Revenir au menu principal                              |");
             printf ("\n  +-----------------------------------------------------------+\n\n\n");
 			scanf("%d", &choix);
 
@@ -264,14 +264,15 @@ struct Entreprise {
         int choix;
     do{
         printf ("  +-------------------------+\n");
-        printf ("  +      Qui ete vous ?     +\n");
-        printf ("  +                         +\n");
-        printf ("  + 1. Un apprenti          +\n");
-        printf ("  + 2. Un enseignant        +\n");
-        printf ("  + 3. Une entreprise       +\n");
-        printf ("  + 4. Un Administrateur    +\n");
-        printf ("  +                         +\n");
-        printf ("  + 5. Quitter le programme +\n");
+        printf ("  |      Qui ete vous ?     |\n");
+        printf ("  +-------------------------+\n");
+        printf ("  |                         |\n");
+        printf ("  | 1. Un apprenti          |\n");
+        printf ("  | 2. Un enseignant        |\n");
+        printf ("  | 3. Une entreprise       |\n");
+        printf ("  | 4. Un Administrateur    |\n");
+        printf ("  |                         |\n");
+        printf ("  | 5. Quitter le programme |\n");
         printf ("  +-------------------------+\n");
         printf ("\n\n");
         scanf ("%d", &choix);
@@ -293,8 +294,8 @@ struct Entreprise {
                 menu_admin_1 ();
                 break;
             case 5 :
-                printf ("\n\n +---------------------------+");
-                printf ("\n +   Au revoir, a bientot.   +");
+                printf ("\n +---------------------------+");
+                printf ("\n |   Au revoir, a bientot.   |");
                 printf ("\n +---------------------------+\n\n\n");
                 break;
             }
@@ -307,15 +308,15 @@ struct Entreprise {
         char mdp_saisi[20];
 
         printf ("  +------------------------------------+\n");
-        printf ("  + Vous avez choisi apprenti :        +\n");
+        printf ("  | Vous avez choisi apprenti :        |\n");
         printf ("  +------------------------------------+\n");
-        printf ("  +                                    +\n");
-        printf ("  + Entrer votre nom :                 +\n");
-        printf ("  + ");
+        printf ("  |                                    |\n");
+        printf ("  | Entrer votre nom :                 |\n");
+        printf ("  | ");
         fflush(stdin);
         fgets (nom, 20, stdin);
-        printf ("  + Entrer votre mot de passe :        +\n");
-        printf ("  + ");
+        printf ("  | Entrer votre mot de passe :        |\n");
+        printf ("  | ");
         fgets (mdp_saisi, 20, stdin);
         printf ("  +------------------------------------+\n");
 
@@ -337,15 +338,15 @@ struct Entreprise {
         char mdp_saisi[20];
 
         printf ("  +------------------------------------+\n");
-        printf ("  + Vous avez choisi enseignant :      +\n");
+        printf ("  | Vous avez choisi enseignant :      |\n");
         printf ("  +------------------------------------+\n");
-        printf ("  +                                    +\n");
-        printf ("  + Entrer votre nom :                 +\n");
-        printf ("  + ");
+        printf ("  |                                    |\n");
+        printf ("  | Entrer votre nom :                 |\n");
+        printf ("  | ");
         fflush(stdin);
         fgets (nom, 20, stdin);
-        printf ("  + Entrer votre mot de passe :        +\n");
-        printf ("  + ");
+        printf ("  | Entrer votre mot de passe :        |\n");
+        printf ("  | ");
         fgets (mdp_saisi, 20, stdin);
         printf ("  +------------------------------------+\n");
 
@@ -364,15 +365,15 @@ struct Entreprise {
         char mdp_saisi[20];
 
         printf ("  +------------------------------------+\n");
-        printf ("  + Vous avez choisi entreprise :      +\n");
+        printf ("  | Vous avez choisi entreprise :      |\n");
         printf ("  +------------------------------------+\n");
-        printf ("  +                                    +\n");
-        printf ("  + Entrer votre nom :                 +\n");
-        printf ("  + ");
+        printf ("  |                                    |\n");
+        printf ("  | Entrer votre nom :                 |\n");
+        printf ("  | ");
         fflush(stdin);
         fgets (nom, 20, stdin);
-        printf ("  + Entrer votre mot de passe :        +\n");
-        printf ("  + ");
+        printf ("  | Entrer votre mot de passe :        |\n");
+        printf ("  | ");
         fgets (mdp_saisi, 20, stdin);
         printf ("  +------------------------------------+\n");
 
@@ -391,15 +392,15 @@ struct Entreprise {
         char mdp_saisi[20];
 
         printf ("  +------------------------------------+\n");
-        printf ("  + Vous avez choisi Administrateur :  +\n");
+        printf ("  | Vous avez choisi Administrateur :  |\n");
         printf ("  +------------------------------------+\n");
-        printf ("  +                                    +\n");
-        printf ("  + Entrer votre nom :                 +\n");
-        printf ("  + ");
+        printf ("  |                                    |\n");
+        printf ("  | Entrer votre nom :                 |\n");
+        printf ("  | ");
         fflush(stdin);
         fgets (nom, 20, stdin);
-        printf ("  + Entrer votre mot de passe :        +\n");
-        printf ("  + ");
+        printf ("  | Entrer votre mot de passe :        |\n");
+        printf ("  | ");
         fgets (mdp_saisi, 20, stdin);
         printf ("  +------------------------------------+\n");
 
@@ -419,13 +420,13 @@ struct Entreprise {
 
     do{
     printf("\n +--------------------------------------------------------+");
-    printf("\n +    Vous avez bien ete connecte en tant qu'apprentie    +");
-    printf("\n +            Vous pouvez maintenant acceder a :          +");
+    printf("\n |    Vous avez bien ete connecte en tant qu'apprentie    |");
+    printf("\n |            Vous pouvez maintenant acceder a :          |");
     printf("\n +--------------------------------------------------------+");
-    printf("\n +                                                        +");
-    printf("\n + 1. Afficher votre profil                               +");
-    printf("\n +                                                        +");
-    printf("\n + 2. retourner au menu principal                         +");
+    printf("\n |                                                        |");
+    printf("\n | 1. Afficher votre profil                               |");
+    printf("\n |                                                        |");
+    printf("\n | 2. retourner au menu principal                         |");
     printf("\n +--------------------------------------------------------+\n\n");
 
     scanf ("%d", &choix);
@@ -446,16 +447,16 @@ struct Entreprise {
 
     do{
     printf("\n +--------------------------------------------------------+");
-    printf("\n +    Vous avez bien ete connecte en tant qu'enseignant   +");
-    printf("\n +           Vous pouvez maintenant acceder a :           +");
+    printf("\n |    Vous avez bien ete connecte en tant qu'enseignant   |");
+    printf("\n |           Vous pouvez maintenant acceder a :           |");
     printf("\n +--------------------------------------------------------+");
-    printf("\n +                                                        +");
-    printf("\n + 1. Afficher votre profil                               +");
-    printf("\n + 2. Ajouter un element a un fichier                     +");
-    printf("\n + 3. Modifier un element d'un fichier                    +");
-    printf("\n + 4. Supprimer un element d'un dossier                   +");
-    printf("\n +                                                        +");
-    printf("\n + 5. retourner au menu principal                         +");
+    printf("\n |                                                        |");
+    printf("\n | 1. Afficher votre profil                               |");
+    printf("\n | 2. Ajouter un element a un fichier                     |");
+    printf("\n | 3. Modifier un element d'un fichier                    |");
+    printf("\n | 4. Supprimer un element d'un dossier                   |");
+    printf("\n |                                                        |");
+    printf("\n | 5. retourner au menu principal                         |");
     printf("\n +--------------------------------------------------------+\n\n");
 
     scanf ("%d", &choix);
@@ -488,14 +489,14 @@ struct Entreprise {
 
     do{
     printf("\n +--------------------------------------------------------+");
-    printf("\n +    Vous avez bien ete connecte en tant qu'entreprise   +");
-    printf("\n +           Vous pouvez maintenant acceder a :           +");
+    printf("\n |    Vous avez bien ete connecte en tant qu'entreprise   |");
+    printf("\n |           Vous pouvez maintenant acceder a :           |");
     printf("\n +--------------------------------------------------------+");
-    printf("\n +                                                        +");
-    printf("\n + 1. Afficher votre profil                               +");
-    printf("\n + 2. Aficher la liste de vos apprentis                   +");
-    printf("\n +                                                        +");
-    printf("\n + 3. retourner au menu principal                         +");
+    printf("\n |                                                        |");
+    printf("\n | 1. Afficher votre profil                               |");
+    printf("\n | 2. Aficher la liste de vos apprentis                   |");
+    printf("\n |                                                        |");
+    printf("\n | 3. retourner au menu principal                         |");
     printf("\n +--------------------------------------------------------+\n\n");
 
     scanf ("%d", &choix);
@@ -520,18 +521,18 @@ struct Entreprise {
 
     do{
     printf("\n +--------------------------------------------------------+");
-    printf("\n +    Vous avez bien ete connecte en tant qu'admin        +");
-    printf("\n +           Vous pouvez maintenant acceder a :           +");
+    printf("\n |    Vous avez bien ete connecte en tant qu'admin        |");
+    printf("\n |           Vous pouvez maintenant acceder a :           |");
     printf("\n +--------------------------------------------------------+");
-    printf("\n +                                                        +");
-    printf("\n + 1. ajouter un element a un fichier                     +");
-    printf("\n + 2. Aficher tout les apprentis du fichier               +");
-    printf("\n + 3. Afficher tout les enseignants du fichier            +");
-    printf("\n + 4. Afficher toute les entreprises du fichier           +");
-    printf("\n + 5. Modifier un element d'un fichier                    +");
-    printf("\n + 6. Supprimer un element d'un fichier                   +");
-    printf("\n +                                                        +");
-    printf("\n + 7. retourner au menu principal                         +");
+    printf("\n |                                                        |");
+    printf("\n | 1. ajouter un element a un fichier                     |");
+    printf("\n | 2. Aficher tout les apprentis du fichier               |");
+    printf("\n | 3. Afficher tout les enseignants du fichier            |");
+    printf("\n | 4. Afficher toute les entreprises du fichier           |");
+    printf("\n | 5. Modifier un element d'un fichier                    |");
+    printf("\n | 6. Supprimer un element d'un fichier                   |");
+    printf("\n |                                                        |");
+    printf("\n | 7. retourner au menu principal                         |");
     printf("\n +--------------------------------------------------------+\n\n");
 
     scanf ("%d", &choix);
@@ -571,7 +572,7 @@ struct Entreprise {
 //main
 void main(){
     printf ("  +----------------------------------------------------------+\n");
-	printf ("  +   Bonjour ce programme sert a la gestion des apprentis   +\n");
+    printf ("  |   Bonjour ce programme sert a la gestion des apprentis   |\n");
     printf ("  +----------------------------------------------------------+\n\n\n");
     menu_principal();
 
