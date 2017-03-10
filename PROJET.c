@@ -318,9 +318,9 @@ struct Entreprise {
                   printf(" Voici les informations sur l'eleve: \n ");
                   afficher_apprenti(eleve);
                   printf(" Donnez les nouvelles informations:\n"); //Et on demande les nouvelles information
-                 // eleve = saisir_apprenti();
-                //  fseek(fichier_apprenti,-sizeof(struct Apprenti),SEEK_CUR);
-                //  fwrite(&eleve,sizeof(struct Apprenti),1,fichier_apprenti);
+                  eleve = saisir_apprenti();
+                  fseek(fichier_apprenti,-sizeof(struct Apprenti),SEEK_CUR);
+                  fwrite(&eleve,sizeof(struct Apprenti),1,fichier_apprenti);
                  trouve=1;
                  printf(" Les informations ont ete modifie, vous allez retourner au menu principal\n\n");
                  menu_principal();
@@ -460,16 +460,63 @@ struct Entreprise {
           {
               if((strcmp(nom,eleve.nom)==0)&&(strcmp(prenom,eleve.prenom)==0))//si le nom et prenom sont trouvés
               {
-               fseek(fichier_apprenti,-sizeof(eleve),SEEK_CUR);
-               fwrite(&eleve,sizeof(struct Apprenti),1,fichier_apprenti);
-               fclose(fichier_apprenti);
+              fseek(fichier_apprenti,-sizeof(eleve),SEEK_CUR);
+              fwrite(&eleve,sizeof(struct Apprenti),1,fichier_apprenti);
+              fclose(fichier_apprenti);
 
                printf(" L'eleve a correctement ete supprimer, vous allez revenir au menu principal \n\n");
                menu_principal();
               }
           }
         }
+        void supprimer_enseignant(){
+          struct Enseignant enseignant;
+          char nom[20];
+          char prenom[20];
 
+          FILE * fichier_enseignant = fopen("enseignant_fic.dat","r+");//ouverture en lecture ecriture
+          printf(" Nom de l'enseignant: ");
+          fflush(stdin);
+          fgets(nom,20,stdin);
+          printf(" Prenom de l'enseigant: ");
+          fflush(stdin);
+          fgets(prenom,20,stdin);
+
+          while(!feof(fichier_enseignant)&&fread(&enseignant,sizeof(struct Enseignant),1,fichier_enseignant))//lecture de tous les enregistrements du fichier
+          {
+              if((strcmp(nom,enseignant.nom)==0)&&(strcmp(prenom,enseignant.prenom)==0))//si le nom et prenom sont trouvés
+              {
+              // fseek(fichier_enseignant,-sizeof(enseignant),SEEK_CUR);
+             //  fwrite(&enseignant,sizeof(struct Enseignant),1,fichier_enseignant);
+             //  fclose(fichier_enseignant);
+
+               printf(" L'enseignant a correctement ete supprimer, vous allez revenir au menu principal \n\n");
+               menu_principal();
+              }
+          }
+        }
+        void supprimer_entreprise(){
+          struct Entreprise entreprise;
+          char nom[20];
+          FILE *fichier_entreprise = fopen("entreprise_fic.dat","r+");//ouverture en lecture ecriture
+
+          printf(" Nom de l'entreprise: ");
+          fflush(stdin);
+          fgets(nom,20,stdin);
+
+          while(!feof(fichier_entreprise)&&fread(&entreprise,sizeof(struct Entreprise),1,fichier_entreprise))//lecture de tous les enregistrements du fichier
+          {
+              if((strcmp(nom,entreprise.nom)==0))//si le nom est trouvés
+              {
+            //   fseek(fichier_apprenti,-sizeof(eleve),SEEK_CUR);
+             //  fwrite(&eleve,sizeof(struct Apprenti),1,fichier_apprenti);
+             //  fclose(fichier_apprenti);
+
+               printf(" L'entreprise a correctement ete supprimer, vous allez revenir au menu principal \n\n");
+               menu_principal();
+              }
+          }
+        }
 
         void supprimer_fic(){
         int choix;
@@ -495,11 +542,11 @@ struct Entreprise {
 				    break;
 
                 case 2 :
-
+                    supprimer_enseignant();
 				    break;
 
                 case 3 :
-
+                    supprimer_entreprise();
 				    break;
 
                 case 4 :
@@ -563,6 +610,7 @@ struct Entreprise {
         char nom [20];
         char mdp_saisi[20];
         struct Apprenti eleve;
+        int trouve =0;
         FILE *fichier_apprenti = fopen("apprenti_fic.dat","r+");
 
         printf ("  +------------------------------------+\n");
@@ -583,19 +631,21 @@ struct Entreprise {
               if((strcmp(nom,eleve.nom)==0)&&(strcmp(mdp_saisi,eleve.mdp_apprenti)==0))
                 {
                  menu_apprentie_2();
-
-                }
-            else
-                {
-                printf("Combinaison incorrecte ! \n\n");
-                menu_apprenti_1();
+                 trouve =1 ;
                 }
           }
+          if (trouve == 0)
+              {
+               printf("Combinaison incorrecte\n");
+               menu_apprenti_1();
+              }
+          fclose(fichier_apprenti);
     }
     void menu_enseignant_1 (){ // a finir
         char nom [20];
         char mdp_saisi[20];
         struct Enseignant enseignant;
+        int trouve = 0;
         FILE *fichier_enseignant = fopen("enseignant_fic.dat","r+");
 
         printf ("  +------------------------------------+\n");
@@ -616,18 +666,21 @@ struct Entreprise {
               if((strcmp(nom,enseignant.nom)==0)&&(strcmp(mdp_saisi,enseignant.mdp_enseignant)==0))
                 {
                  menu_enseignant_2();
-                }
-            else
-                {
-                printf("Combinaison incorrecte ! \n\n");
-                menu_enseignant_1();
+                 trouve =1 ;
                 }
           }
+          if (trouve == 0)
+              {
+               printf("Combinaison incorrecte\n");
+               menu_enseignant_1();
+              }
+          fclose(fichier_enseignant);
     }
     void menu_entreprise_1 (){  //a finir
         char nom [20];
         char mdp_saisi[20];
         struct Entreprise entreprise;
+        int trouve = 0;
         FILE *fichier_entreprise = fopen("entreprise_fic.dat","r+");
 
         printf ("  +------------------------------------+\n");
@@ -648,13 +701,16 @@ struct Entreprise {
               if((strcmp(nom,entreprise.nom)==0)&&(strcmp(mdp_saisi,entreprise.mdp_entreprise)==0))
                 {
                  menu_entreprise_2();
-                }
-            else
-                {
-                printf("Combinaison incorrecte ! \n\n");
-                menu_entreprise_1();
+                 trouve =1 ;
                 }
           }
+          if (trouve == 0)
+              {
+               printf("Combinaison incorrecte\n");
+               menu_entreprise_1();
+              }
+
+          fclose(fichier_entreprise);
     }
     void menu_admin_1 (){  //marche correctement
         char nom [20];
