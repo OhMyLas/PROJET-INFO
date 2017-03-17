@@ -4,6 +4,11 @@
 #include <stdlib.h>
 
 //Structures
+struct prof_responsable{
+char nom_prof_respon [20];
+char prenom_prof_respon [20];
+};
+
 struct Date{
 	int jour;
 	int mois;
@@ -21,6 +26,10 @@ struct Apprenti {
 	char nom [20];
 	int salaire;
 	char mdp_apprenti [20]; // mdp unique définissant un apprenti, sert pour se connecter
+	char prof_responsable [20];  // permet d'atribuer un professeur responsable a l'eleve
+                                // ce champ serat saisie plus tard soit par l'admin soit par un professeur
+	char entreprise_apprenti  [20];   // permet d'attribuer un eleve a une entreprise
+                                     // ce champ serat saisie plus tard soit par l'admin soit par un professeur
 };
 struct Enseignant {
 	char prenom [20];
@@ -36,7 +45,51 @@ struct Entreprise {
 
 
 //fonctions supplémentaires
+void attribuer_prof (){
+char nom [20];
+char prenom [20];
+struct Apprenti eleve;
+int trouve =0;
+FILE *fichier_apprenti = fopen("apprenti_fic.dat","r+");
 
+printf (" +-----------------------------------------------------------------+\n");
+printf (" | Vous avez choisi d'ajouter un professeur responsable a un eleve |\n");
+printf (" +-----------------------------------------------------------------+\n");
+printf (" |                                                                 |\n");
+printf (" | Entrer le nom de l'apprenti :                                   |\n");
+printf (" | ");
+__fpurge(stdin);
+fgets (nom, 20, stdin);
+printf (" | Entrer le prenom de l'apprenti :                                |\n");
+printf (" | ");
+__fpurge(stdin);
+fgets (prenom, 20, stdin);
+printf (" +-----------------------------------------------------------------+\n");
+
+while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_apprenti))
+          {
+              if((strcmp(nom,eleve.nom)==0)&&(strcmp(prenom,eleve.prenom)==0))
+                {
+                printf(" Voici les informations sur l'eleve: \n ");
+                afficher_apprenti (eleve);
+                printf(" Vous pouvez maintenant modifier le nom du professeur responsable de cet apprenti.\n");
+
+                printf ("\n Entrer le nom du professeur responsable : ");
+                __fpurge(stdin);
+                fgets (eleve.prof_responsable, 20, stdin);
+
+
+                trouve =1 ;
+
+                }
+          }
+          if (trouve == 0)
+              {
+               printf("Combinaison incorrecte\n");
+               attribuer_prof();
+              }
+          fclose(fichier_apprenti);
+}
 
 
 
@@ -103,12 +156,14 @@ struct Entreprise {
 
 	// 2)   fonction afficher UN apprenti/enseignant/entreprise (marche correctement)
 	void afficher_apprenti (struct Apprenti apprenti){
-		printf ("\n +----------------------------------------------------+");
-		printf ("\n | %s ", apprenti.prenom);
-		printf ("\n | %s ", apprenti.nom);
-		printf ("\n | Salaire : %d euro", apprenti.salaire);
-		printf ("\n | MDP : %s ", apprenti.mdp_apprenti);
-		printf ("\n +----------------------------------------------------+\n");
+		printf ("\n +----------------------------------------------------+"         );
+		printf ("\n | %s ", apprenti.prenom                                         );
+		printf ("\n | %s ", apprenti.nom                                            );
+		printf ("\n | Salaire : %d euro", apprenti.salaire                          );
+		printf ("\n | MDP : %s ", apprenti.mdp_apprenti                             );
+		printf ("\n | Professeur responsable : %s", apprenti.prof_responsable       );
+		printf ("\n | Entreprise de l'apprentie : %s", apprenti.entreprise_apprenti );
+		printf ("\n +----------------------------------------------------+\n"       );
 	}
 	void afficher_enseignant (struct Enseignant enseignant){
 		printf ("\n +----------------------------------------------------+");
