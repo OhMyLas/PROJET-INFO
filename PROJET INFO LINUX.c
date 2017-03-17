@@ -4,11 +4,10 @@
 #include <stdlib.h>
 
 //Structures
-struct prof_responsable{
+struct Prof_responsable{
 char nom_prof_respon [20];
 char prenom_prof_respon [20];
 };
-
 struct Date{
 	int jour;
 	int mois;
@@ -26,7 +25,7 @@ struct Apprenti {
 	char nom [20];
 	int salaire;
 	char mdp_apprenti [20]; // mdp unique définissant un apprenti, sert pour se connecter
-	char prof_responsable [20];  // permet d'atribuer un professeur responsable a l'eleve
+	struct Prof_responsable prof;  // permet d'atribuer un professeur responsable a l'eleve
                                 // ce champ serat saisie plus tard soit par l'admin soit par un professeur
 	char entreprise_apprenti  [20];   // permet d'attribuer un eleve a une entreprise
                                      // ce champ serat saisie plus tard soit par l'admin soit par un professeur
@@ -45,6 +44,8 @@ struct Entreprise {
 
 
 //fonctions supplémentaires
+
+
 void attribuer_prof (){
 char nom [20];
 char prenom [20];
@@ -76,7 +77,7 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
 
                 printf ("\n Entrer le nom du professeur responsable : ");
                 __fpurge(stdin);
-                fgets (eleve.prof_responsable, 20, stdin);
+                fgets (eleve.prof.nom_prof_respon, 20, stdin);
 
 
                 trouve =1 ;
@@ -94,21 +95,20 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
 
 
 
-
 //fonctions essentiels
 	// 1)   fonctions saisi UN apprenti/enseignant/entreprise (marche correctement, pb de getchar parfois)
 	struct Apprenti saisir_apprenti (){ //remplacement des getchar par des fflush(stdin);
 		struct Apprenti apprenti;
 
 		printf (" Entrer le prenom de l'apprenti : ");
-        __fpurge(stdin);
+          __fpurge(stdin);
 		fgets (apprenti.prenom, 20, stdin);
 		printf ("\n Entrer le nom de l'apprenti : ");
 		fgets (apprenti.nom, 20, stdin);
 		printf ("\n Entrer le salaire de l'apprenti : ");
 		scanf ("%d", &apprenti.salaire );
 		printf ("\n Entrer le mot de passe de l'apprenti : ");
-		__fpurge(stdin);
+		  __fpurge(stdin);
 		fgets (apprenti.mdp_apprenti, 20, stdin);
 		return apprenti;
 	}
@@ -116,14 +116,14 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
 		struct Enseignant enseignant;
 
 		printf (" Entrer le prenom de l'enseignant : ");
-		__fpurge(stdin);
+		fflush(stdin);
 		fgets (enseignant.prenom, 20, stdin);
 		printf ("\n Entrer le nom de l'enseignant : ");
 		fgets (enseignant.nom, 20, stdin);
 		printf ("\n Entrer le bureau de l'enseignant : ");
 		fgets (enseignant.bureau, 20, stdin);
 		printf ("\n Entrer le mot de passe de l'enseignant : ");
-		__fpurge(stdin);
+		fflush(stdin);
 		fgets (enseignant.mdp_enseignant, 20, stdin);
 		return enseignant;
 	}
@@ -131,23 +131,23 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
 		struct Entreprise entreprise;
 
 		printf (" Entrer le nom de l'entreprise :");
-		__fpurge(stdin);
+		fflush(stdin);
 		fgets (entreprise.nom, 20, stdin);
 		printf ("\n vous allez maintenant entrer l'adresse \n");
 		printf (" Entrer le numero de rue de l'entreprise : ");
 		scanf("%d", &entreprise.adresse_entreprise.num_rue);
 		printf ("\n Entrer le nom de rue de l'entreprise : ");
-		__fpurge(stdin);
+		fflush(stdin);
 		fgets (entreprise.adresse_entreprise.nom_rue, 80, stdin);
 		printf ("\n Entrer le code postal de l'entreprise : ");
 		scanf ("%d", &entreprise.adresse_entreprise.code_postal);
 		printf ("\n Entrer le nom de la ville de l'entreprise : ");
-		__fpurge(stdin);
+		fflush(stdin);
 		fgets (entreprise.adresse_entreprise.ville, 20, stdin);
 		printf ("\n Entrer le pays de l'entreprise : ");
 		fgets (entreprise.adresse_entreprise.pays, 20, stdin);
 		printf ("\n Entrer le mot de passe de l'entreprise : ");
-		__fpurge(stdin);
+		fflush(stdin);
 		fgets (entreprise.mdp_entreprise, 20, stdin);
 		return entreprise;
 	}
@@ -156,14 +156,15 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
 
 	// 2)   fonction afficher UN apprenti/enseignant/entreprise (marche correctement)
 	void afficher_apprenti (struct Apprenti apprenti){
-		printf ("\n +----------------------------------------------------+"         );
-		printf ("\n | %s ", apprenti.prenom                                         );
-		printf ("\n | %s ", apprenti.nom                                            );
-		printf ("\n | Salaire : %d euro", apprenti.salaire                          );
-		printf ("\n | MDP : %s ", apprenti.mdp_apprenti                             );
-		printf ("\n | Professeur responsable : %s", apprenti.prof_responsable       );
-		printf ("\n | Entreprise de l'apprentie : %s", apprenti.entreprise_apprenti );
-		printf ("\n +----------------------------------------------------+\n"       );
+		printf ("\n +----------------------------------------------------+");
+		printf ("\n | %s ", apprenti.prenom);
+		printf ("\n | %s ", apprenti.nom);
+		printf ("\n | Salaire : %d euro", apprenti.salaire);
+		printf ("\n | MDP : %s ", apprenti.mdp_apprenti);
+		printf ("\n | Nom professeur responsable : %s", apprenti.prof.nom_prof_respon);
+        printf ("\n | Prenom professeur responsable : %s", apprenti.prof.prenom_prof_respon);
+        printf ("\n | Entreprise de l'apprentie : %s", apprenti.entreprise_apprenti );
+		printf ("\n +----------------------------------------------------+\n");
 	}
 	void afficher_enseignant (struct Enseignant enseignant){
 		printf ("\n +----------------------------------------------------+");
@@ -350,7 +351,6 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
         }
     // 5)   Fonction pour modifier les fichier
 
-    //probleme pour modifier le fichier
         void modifier_apprenti(){
           struct Apprenti eleve;
           char nom[20];
@@ -359,7 +359,7 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
 
           FILE *fichier_apprenti = fopen("apprenti_fic.dat","r+");//ouverture en lecture ecriture
           printf(" Nom de l'eleve: ");
-          __fpurge(stdin);
+            __fpurge(stdin);
           fgets(nom,20,stdin);
           printf(" Prenom de l'eleve: ");
           __fpurge(stdin);
@@ -370,16 +370,16 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
           {
               if((strcmp(nom,eleve.nom)==0)&&(strcmp(prenom,eleve.prenom)==0)) //si le nom et prenom sont trouvés, on affiche ses informations
               {
-                  printf(" Voici les informations sur l'eleve: \n ");
-                  afficher_apprenti(eleve);
-                  printf(" Donnez les nouvelles informations:\n"); //Et on demande les nouvelles information
-                  eleve = saisir_apprenti();
-                  fseek(fichier_apprenti,-sizeof(struct Apprenti),SEEK_CUR);
-                  fwrite(&eleve,sizeof(struct Apprenti),1,fichier_apprenti);
-                  fseek(fichier_apprenti,sizeof(struct Apprenti),SEEK_CUR);
-                 trouve=1;
-                 printf(" Les informations ont ete modifie, vous allez retourner au menu principal\n\n");
-                 menu_principal();
+                printf(" Voici les informations sur l'eleve: \n ");
+                afficher_apprenti(eleve);
+                printf(" Donnez les nouvelles informations:\n"); //Et on demande les nouvelles information
+                eleve = saisir_apprenti();
+                fseek(fichier_apprenti,-sizeof(struct Apprenti),SEEK_CUR);
+                fwrite(&eleve,sizeof(struct Apprenti),1,fichier_apprenti);
+                fseek(fichier_apprenti,sizeof(struct Apprenti),SEEK_CUR);
+                trouve=1;
+                printf(" Les informations ont ete modifie, vous allez retourner au menu principal\n\n");
+                menu_principal();
               }
           }
           if(trouve==0)
@@ -499,7 +499,6 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
         }
 
     // 6)   Fonction pour supprimer un element de fichier
-//fonction de supprimer d'un élève
 
         void supprimer_apprenti(){
           struct Apprenti eleve;
@@ -514,15 +513,13 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
           __fpurge(stdin);
           fgets(prenom,20,stdin);
 
-/*
-    fic1: apprenti_fic.dat
-    fic2: apprenti_fic2.dat
 
-    on veut supprimer un élément du fic1, donc on creer un second fichier fic2 et on copie tout les element du fic1
-    qu'on veut garder on ne copie pas l'element qu'on veut supprimer
-    apres on supprime le fic1
-    puis on rename apprenti_fic2.dat en apprenti_fic.dat
-*/
+   // fic1: apprenti_fic.dat
+   // fic2: apprenti_fic2.dat
+   // on veut supprimer un élément du fic1, donc on creer un second fichier fic2 et on copie tout les element du fic1
+   // qu on veut garder on ne copie pas l element qu on veut supprimer
+   // apres on supprime le fic1
+   // puis on rename apprenti_fic2.dat en apprenti_fic.dat
 
 
           while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_apprenti))//lecture de tous les enregistrements du fichier
@@ -539,7 +536,6 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
               }
           }
         }
-
 
         void supprimer_fic(){
         int choix;
@@ -565,11 +561,11 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
 				    break;
 
                 case 2 :
-                    supprimer_enseignant();
+
 				    break;
 
                 case 3 :
-                    supprimer_entreprise();
+
 				    break;
 
                 case 4 :
@@ -582,13 +578,15 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
 
 
 
+
+
 //Fonctions menu
     // 0)   Menu principale celui qui est executer dans le main
     void menu_principal (){
         int choix;
     do{
         printf ("  +-------------------------+\n");
-        printf ("  |      Qui ete vous ?     |\n");
+        printf ("  |      Qui etes vous ?    |\n");
         printf ("  +-------------------------+\n");
         printf ("  |                         |\n");
         printf ("  | 1. Un apprenti          |\n");
@@ -757,7 +755,7 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
             printf("Combinaison incorrecte ! \n\n");
             menu_admin_1 ();
         }
-    }
+}
 
     // 2)   Fonctions pour le menu apres verification des noms et mdp
     void menu_apprentie_2 (){ // a finir
