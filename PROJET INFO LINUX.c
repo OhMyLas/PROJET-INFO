@@ -45,53 +45,106 @@ struct Entreprise {
 
 //fonctions supplémentaires
 
-
 void attribuer_prof (){
-char nom [20];
-char prenom [20];
-struct Apprenti eleve;
-int trouve =0;
-FILE *fichier_apprenti = fopen("apprenti_fic.dat","r+");
+    char nom [20];
+    char prenom [20];
+    struct Apprenti eleve;
+    int trouve =0;
+    FILE *fichier_apprenti = fopen("apprenti_fic.dat","r+");
 
-printf (" +-----------------------------------------------------------------+\n");
-printf (" | Vous avez choisi d'ajouter un professeur responsable a un eleve |\n");
-printf (" +-----------------------------------------------------------------+\n");
-printf (" |                                                                 |\n");
-printf (" | Entrer le nom de l'apprenti :                                   |\n");
-printf (" | ");
-__fpurge(stdin);
-fgets (nom, 20, stdin);
-printf (" | Entrer le prenom de l'apprenti :                                |\n");
-printf (" | ");
-__fpurge(stdin);
-fgets (prenom, 20, stdin);
-printf (" +-----------------------------------------------------------------+\n");
+    printf (" +-----------------------------------------------------------------+\n");
+    printf (" | Vous avez choisi d'ajouter un professeur responsable a un eleve |\n");
+    printf (" +-----------------------------------------------------------------+\n");
+    printf (" |                                                                 |\n");
+    printf (" | Entrer le nom de l'apprenti :                                   |\n");
+    printf (" | ");
+    __fpurge(stdin);
+    fgets (nom, 20, stdin);
+    printf (" | Entrer le prenom de l'apprenti :                                |\n");
+    printf (" | ");
+    __fpurge(stdin);
+    fgets (prenom, 20, stdin);
+    printf (" +-----------------------------------------------------------------+\n");
 
-while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_apprenti))
-          {
-              if((strcmp(nom,eleve.nom)==0)&&(strcmp(prenom,eleve.prenom)==0))
-                {
-                printf(" Voici les informations sur l'eleve: \n ");
-                afficher_apprenti (eleve);
-                printf(" Vous pouvez maintenant modifier le nom du professeur responsable de cet apprenti.\n");
-
-                printf ("\n Entrer le nom du professeur responsable : ");
-                __fpurge(stdin);
-                fgets (eleve.prof.nom_prof_respon, 20, stdin);
-
-
-                trouve =1 ;
-
-                }
-          }
-          if (trouve == 0)
+    while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_apprenti))
               {
-               printf("Combinaison incorrecte\n");
-               attribuer_prof();
-              }
-          fclose(fichier_apprenti);
-}
+                  if((strcmp(nom,eleve.nom)==0)&&(strcmp(prenom,eleve.prenom)==0))
+                    {
+                    printf(" Voici les informations sur l'eleve: \n ");
+                    afficher_apprenti (eleve);
+                    printf(" Vous pouvez maintenant modifier le nom du professeur responsable de cet apprenti.\n");
 
+                    printf ("\n Entrer le nom du professeur responsable : ");
+                    __fpurge(stdin);
+                    fgets (eleve.prof.nom_prof_respon, 20, stdin);
+                    printf ("\n Entrer le prenom du professeur responsable : ");
+                    __fpurge(stdin);
+                    fgets (eleve.prof.prenom_prof_respon, 20, stdin);
+
+                    fseek(fichier_apprenti,-sizeof(struct Apprenti),SEEK_CUR);
+                    fwrite(&eleve,sizeof(struct Apprenti),1,fichier_apprenti);
+                    fseek(fichier_apprenti,sizeof(struct Apprenti),SEEK_CUR);
+                    trouve =1 ;
+                    printf(" Les informations ont ete modifie, vous allez retourner au menu principal\n\n");
+                    menu_principal();
+                    }
+              }
+              if (trouve == 0)
+                  {
+                   printf("Combinaison incorrecte\n");
+                   attribuer_prof();
+                  }
+              fclose(fichier_apprenti);
+    }
+
+void attribuer_entreprise (){
+char nom [20];
+    char prenom [20];
+    struct Apprenti eleve;
+    int trouve =0;
+    FILE *fichier_apprenti = fopen("apprenti_fic.dat","r+");
+
+    printf (" +-----------------------------------------------------------------+\n");
+    printf (" |      Vous avez choisi d'ajouter une entreprise a un eleve       |\n");
+    printf (" +-----------------------------------------------------------------+\n");
+    printf (" |                                                                 |\n");
+    printf (" | Entrer le nom de l'apprenti :                                   |\n");
+    printf (" | ");
+    __fpurge(stdin);
+    fgets (nom, 20, stdin);
+    printf (" | Entrer le prenom de l'apprenti :                                |\n");
+    printf (" | ");
+    __fpurge(stdin);
+    fgets (prenom, 20, stdin);
+    printf (" +-----------------------------------------------------------------+\n");
+
+    while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_apprenti))
+              {
+                  if((strcmp(nom,eleve.nom)==0)&&(strcmp(prenom,eleve.prenom)==0))
+                    {
+                    printf(" Voici les informations sur l'eleve: \n ");
+                    afficher_apprenti (eleve);
+                    printf(" Vous pouvez maintenant modifier le nom de l'entreprise de cet apprenti.\n");
+
+                    printf ("\n Entrer le nom de l'entreprise : ");
+                    __fpurge(stdin);
+                    fgets (eleve.entreprise_apprenti, 20, stdin);
+                    fseek(fichier_apprenti,-sizeof(struct Apprenti),SEEK_CUR);
+                    fwrite(&eleve,sizeof(struct Apprenti),1,fichier_apprenti);
+                    fseek(fichier_apprenti,sizeof(struct Apprenti),SEEK_CUR);
+                    trouve =1 ;
+                    printf(" Les informations ont ete modifie, vous allez retourner au menu principal\n\n");
+                    menu_principal();
+                    }
+              }
+              if (trouve == 0)
+                  {
+                   printf("Combinaison incorrecte\n");
+                   attribuer_entreprise();
+                  }
+              fclose(fichier_apprenti);
+
+}
 
 
 
@@ -576,10 +629,6 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
         }
 
 
-
-
-
-
 //Fonctions menu
     // 0)   Menu principale celui qui est executer dans le main
     void menu_principal (){
@@ -799,8 +848,10 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
     printf("\n | 2. Ajouter un element a un fichier                     |");
     printf("\n | 3. Modifier un element d'un fichier                    |");
     printf("\n | 4. Supprimer un element d'un dossier                   |");
+    printf("\n | 5. Attribuer un professeur responsable a un eleve      |");
+    printf("\n | 6. Attribuer une entreprise a un eleve                 |");
     printf("\n |                                                        |");
-    printf("\n | 5. retourner au menu principal                         |");
+    printf("\n | 7. retourner au menu principal                         |");
     printf("\n +--------------------------------------------------------+\n\n");
 
     scanf ("%d", &choix);
@@ -822,11 +873,19 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
                 supprimer_fic();
                 break;
 
-            case 5:
+            case 5 :
+                attribuer_prof();
+                break;
+
+            case 6 :
+
+                break;
+
+            case 7:
                 menu_principal();
                 break;
             }
-    }while (choix > 5);
+    }while (choix > 7);
     }
     void menu_entreprise_2 (){ // a finir
     int choix;
@@ -873,8 +932,10 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
     printf("\n | 2. Aficher tout les element d'un fichier               |");
     printf("\n | 3. Modifier un element d'un fichier                    |");
     printf("\n | 4. Supprimer un element d'un fichier                   |");
+    printf("\n | 5. Attribuer un professeur responsable a un eleve      |");
+    printf("\n | 6. Attribuer une entreprise a un eleve                 |");
     printf("\n |                                                        |");
-    printf("\n | 5. retourner au menu principal                         |");
+    printf("\n | 7. retourner au menu principal                         |");
     printf("\n +--------------------------------------------------------+\n\n");
 
     scanf ("%d", &choix);
@@ -896,10 +957,18 @@ while(!feof(fichier_apprenti)&&fread(&eleve,sizeof(struct Apprenti),1,fichier_ap
                 break;
 
             case 5 :
+                attribuer_prof();
+                break;
+
+            case 6 :
+
+                break;
+
+            case 7 :
                 menu_principal();
                 break;
             }
-    }while (choix > 5);
+    }while (choix > 7);
     }
 
 //main
